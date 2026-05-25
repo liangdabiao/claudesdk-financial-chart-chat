@@ -158,6 +158,17 @@ financial-chart-chat/
 
 修改 `.env` 中的 `MODEL` 字段。支持所有 Anthropic API 兼容的模型。
 
+
+## 感谢和参考
+https://linux.do/  感谢佬友，
+
+https://github.com/liangdabiao/claudesdk-skill  AI生成claude-agent-sdk 项目，
+
+https://pan.quark.cn/s/3f91c08aafca#/list/share  akshare skill参考
+
 ## License
 
 MIT
+
+
+
