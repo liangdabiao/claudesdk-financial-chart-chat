@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import type { ChatMessage } from "../types";
 
+const uuid = () => crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
 export function useWebSocket() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(false);
@@ -26,7 +28,7 @@ export function useWebSocket() {
               if (last?.role === "assistant" && !last.toolCall) {
                 return [...prev.slice(0, -1), { ...last, content: last.content + block.text }];
               }
-              return [...prev, { id: crypto.randomUUID(), role: "assistant", content: block.text }];
+              return [...prev, { id: uuid(), role: "assistant", content: block.text }];
             });
             setIsThinking(false);
           }
@@ -34,7 +36,7 @@ export function useWebSocket() {
             setMessages((prev) => [
               ...prev,
               {
-                id: crypto.randomUUID(),
+                id: uuid(),
                 role: "system",
                 content: "",
                 toolCall: { name: block.name, status: "running", input: block.input },
@@ -77,7 +79,7 @@ export function useWebSocket() {
       if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
       setMessages((prev) => [
         ...prev,
-        { id: crypto.randomUUID(), role: "user", content, files },
+        { id: uuid(), role: "user", content, files },
       ]);
       setIsThinking(true);
       wsRef.current.send(JSON.stringify({ type: "message", content }));
